@@ -1,6 +1,5 @@
 package com.baidu.test.mc.iermu;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -8,16 +7,11 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.Menu;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.mapapi.BMapManager;
-import com.baidu.mapapi.map.Ground;
-import com.baidu.mapapi.map.GroundOverlay;
 import com.baidu.mapapi.map.ItemizedOverlay;
 import com.baidu.mapapi.map.MapController;
 import com.baidu.mapapi.map.MapView;
@@ -35,22 +29,22 @@ public class MainActivity extends Activity {
 	private MyOverlay mOverlay = null;
 	private PopupOverlay pop = null;
 	private ArrayList<OverlayItem> mItems = null;
-	private TextView popupText = null;
-	private OverlayItem mCurItem = null;
+	// private TextView popupText = null;
+	// private OverlayItem mCurItem = null;
 	private Button button = null;
-	private View popupInfo = null;
-	private View popupLeft = null;
-	private View popupRight = null;
+	// private View popupInfo = null;
+	// private View popupLeft = null;
+	// private View popupRight = null;
 	double mLngBidu = 116.30814954222;
 	double mLatBidu = 40.056885091681;
 
 	// ground overlay
-	private GroundOverlay mGroundOverlay;
-	private Ground mGround;
-	private double mLon5 = 116.380338;
-	private double mLat5 = 39.92235;
-	private double mLon6 = 116.414977;
-	private double mLat6 = 39.947246;
+	// private GroundOverlay mGroundOverlay;
+	// private Ground mGround;
+	// private double mLon5 = 116.380338;
+	// private double mLat5 = 39.92235;
+	// private double mLon6 = 116.414977;
+	// private double mLat6 = 39.947246;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +97,7 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void initOverlay() {
 		/**
 		 * 创建自定义overlay
@@ -137,6 +132,7 @@ public class MainActivity extends Activity {
 		mMapView.refresh();
 	}
 
+	@SuppressWarnings("rawtypes")
 	public class MyOverlay extends ItemizedOverlay {
 
 		public MyOverlay(Drawable defaultMarker, MapView mapView) {
@@ -145,11 +141,11 @@ public class MainActivity extends Activity {
 
 		@Override
 		public boolean onTap(int index) {
-			OverlayItem item = getItem(index);
-			mCurItem = item;
+			// OverlayItem item = getItem(index);
+			// mCurItem = item;
 			Toast.makeText(getApplication(), "启动i耳目", Toast.LENGTH_SHORT)
 					.show();
-			startCamera();
+			playVideo();
 			return true;
 		}
 
@@ -162,12 +158,26 @@ public class MainActivity extends Activity {
 			return false;
 		}
 
-		private void startCamera() {
-			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-			intent.putExtra(MediaStore.EXTRA_OUTPUT,
-					Uri.fromFile(new File("/")));
-			startActivityForResult(intent, 1);
-		}
+	}
 
+	private void playVideo() {
+		// get url
+		String source = "";
+		if (source == null || source.equals("")) {
+			/**
+			 * 简单检测播放源的合法性,不合法不播放
+			 */
+			Toast.makeText(this, "please input your video source",
+					Toast.LENGTH_SHORT).show();
+			source = "http://devimages.apple.com/iphone/samples/bipbop/gear4/prog_index.m3u8";
+			Intent intent = new Intent(this, VideoActivity.class);
+			intent.setData(Uri.parse(source));
+			startActivity(intent);
+
+		} else {
+			Intent intent = new Intent(this, VideoActivity.class);
+			intent.setData(Uri.parse(source));
+			startActivity(intent);
+		}
 	}
 }
