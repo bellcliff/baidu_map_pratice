@@ -166,7 +166,8 @@ public class MainActivity extends Activity {
 			// mCurItem = item;
 			Toast.makeText(getApplication(), "Æô¶¯i¶úÄ¿", Toast.LENGTH_SHORT)
 					.show();
-			playVideo();
+//			playVideo();
+			playPicture();
 			return true;
 		}
 
@@ -202,5 +203,10 @@ public class MainActivity extends Activity {
 			intent.setData(Uri.parse(source));
 			startActivity(intent);
 		}
+	}
+	
+	private void playPicture(){
+		Intent intent = new Intent(this, StandardVideoActivity.class);
+		startActivity(intent);
 	}
 }

@@ -12,9 +12,9 @@ public class MyApplication extends Application {
 
 	private static MyApplication mInstance = null;
 	// for home
-	// public static final String strKey = "lfGknURiy4lApRRGstaORHnM";
+	 public static final String strKey = "lfGknURiy4lApRRGstaORHnM";
 	// for work
-	public static final String strKey = "GOgGIZnysCsGwzmdEYQKjEIl";
+//	public static final String strKey = "GOgGIZnysCsGwzmdEYQKjEIl";
 	public boolean m_bKeyRight = true;
 	BMapManager mBMapManager = null;
 
