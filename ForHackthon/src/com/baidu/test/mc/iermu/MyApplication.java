@@ -11,7 +11,10 @@ import com.baidu.mapapi.map.MKEvent;
 public class MyApplication extends Application {
 
 	private static MyApplication mInstance = null;
-	public static final String strKey = "lfGknURiy4lApRRGstaORHnM";
+	// for home
+	// public static final String strKey = "lfGknURiy4lApRRGstaORHnM";
+	// for work
+	public static final String strKey = "GOgGIZnysCsGwzmdEYQKjEIl";
 	public boolean m_bKeyRight = true;
 	BMapManager mBMapManager = null;
 
@@ -31,7 +34,7 @@ public class MyApplication extends Application {
 
 		if (!mBMapManager.init(strKey, new MyGeneralListener())) {
 			Toast.makeText(getInstance().getApplicationContext(),
-					"BMapManager  初始化错误!", Toast.LENGTH_LONG).show();
+					"BMapManager key error", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -39,35 +42,30 @@ public class MyApplication extends Application {
 		return mInstance;
 	}
 
-	// 常用事件监听，用来处理通常的网络错误，授权验证错误等
 	static class MyGeneralListener implements MKGeneralListener {
 
 		@Override
 		public void onGetNetworkState(int iError) {
 			if (iError == MKEvent.ERROR_NETWORK_CONNECT) {
 				Toast.makeText(getInstance().getApplicationContext(),
-						"您的网络出错啦！", Toast.LENGTH_LONG).show();
+						"network error", Toast.LENGTH_LONG).show();
 			} else if (iError == MKEvent.ERROR_NETWORK_DATA) {
 				Toast.makeText(getInstance().getApplicationContext(),
-						"输入正确的检索条件！", Toast.LENGTH_LONG).show();
+						"network data error", Toast.LENGTH_LONG).show();
 			}
 			// ...
 		}
 
 		@Override
 		public void onGetPermissionState(int iError) {
-			// 非零值表示key验证未通过
 			if (iError != 0) {
-				// 授权Key错误：
-				Toast.makeText(
-						getInstance().getApplicationContext(),
-						"请在 DemoApplication.java文件输入正确的授权Key,并检查您的网络连接是否正常！error: "
-								+ iError, Toast.LENGTH_LONG).show();
+				Toast.makeText(getInstance().getApplicationContext(),
+						"key error" + iError, Toast.LENGTH_LONG).show();
 				getInstance().m_bKeyRight = false;
 			} else {
 				getInstance().m_bKeyRight = true;
-				Toast.makeText(getInstance().getApplicationContext(),
-						"key认证成功", Toast.LENGTH_LONG).show();
+				Toast.makeText(getInstance().getApplicationContext(), "ok",
+						Toast.LENGTH_LONG).show();
 			}
 		}
 	}
