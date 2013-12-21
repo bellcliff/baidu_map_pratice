@@ -20,9 +20,6 @@ import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 
 public class MainActivity extends Activity {
-	/**
-	 * MapView 是地图主控件
-	 */
 	private MapView mMapView = null;
 
 	private MapController mMapController = null;
@@ -53,9 +50,6 @@ public class MainActivity extends Activity {
 		MyApplication app = (MyApplication) getApplication();
 		if (app.mBMapManager == null) {
 			app.mBMapManager = new BMapManager(this);
-			/**
-			 * 如果BMapManager没有初始化则初始化BMapManager
-			 */
 			app.mBMapManager.init(MyApplication.strKey,
 					new MyApplication.MyGeneralListener());
 		}
@@ -63,28 +57,12 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 
 		mMapView = (MapView) findViewById(R.id.bmapView);
-		/**
-		 * 获取地图控制器
-		 */
 		mMapController = mMapView.getController();
-		/**
-		 * 设置地图是否响应点击事件 .
-		 */
 		mMapController.enableClick(true);
-		/**
-		 * 设置地图缩放级别
-		 */
 		mMapController.setZoom(19);
-		/**
-		 * 显示内置缩放控件
-		 */
 		mMapView.setBuiltInZoomControls(true);
 
 		initOverlay();
-
-		/**
-		 * 设定地图中心点
-		 */
 		GeoPoint p = new GeoPoint((int) (mLatBidu * 1E6),
 				(int) (mLngBidu * 1E6));
 		mMapController.setCenter(p);
@@ -120,36 +98,17 @@ public class MainActivity extends Activity {
 
 	@SuppressWarnings("unchecked")
 	public void initOverlay() {
-		/**
-		 * 创建自定义overlay
-		 */
-		mOverlay = new MyOverlay(getResources().getDrawable(
-				R.drawable.images), mMapView);
+		mOverlay = new MyOverlay(getResources().getDrawable(R.drawable.images),
+				mMapView);
 
 		GeoPoint p1 = new GeoPoint((int) (mLatBidu * 1E6),
 				(int) (mLngBidu * 1E6));
-		OverlayItem item1 = new OverlayItem(p1, "i耳目", "");
-		/**
-		 * 设置overlay图标，如不设置，则使用创建ItemizedOverlay时的默认图标.
-		 */
+		OverlayItem item1 = new OverlayItem(p1, "i鑰崇洰", "");
 		item1.setMarker(getResources().getDrawable(R.drawable.images));
-		/**
-		 * 将item 添加到overlay中 注意： 同一个itme只能add一次
-		 */
 		mOverlay.addItem(item1);
-		/**
-		 * 保存所有item，以便overlay在reset后重新添加
-		 */
 		mItems = new ArrayList<OverlayItem>();
 		mItems.addAll(mOverlay.getAllItem());
-
-		/**
-		 * 将overlay 添加至MapView中
-		 */
 		mMapView.getOverlays().add(mOverlay);
-		/**
-		 * 刷新地图
-		 */
 		mMapView.refresh();
 	}
 
@@ -162,11 +121,6 @@ public class MainActivity extends Activity {
 
 		@Override
 		public boolean onTap(int index) {
-			// OverlayItem item = getItem(index);
-			// mCurItem = item;
-			Toast.makeText(getApplication(), "启动i耳目", Toast.LENGTH_SHORT)
-					.show();
-//			playVideo();
 			playPicture();
 			return true;
 		}
@@ -187,13 +141,10 @@ public class MainActivity extends Activity {
 		String source = "rtmp://hz.bms.baidu.com:1935/live/b959319e686b11e3b7af5cf3fce6e084?deviceid=137892435131&sign=DTAES-CqnyQSm05YocyMV8Skl5IwA2-srRtbnrb8OMenU6CmZRNtNKBeTU%3D&time=1387536200&expire=1387536260";
 		System.out.println(Uri.parse(source));
 		if (source == null || source.equals("")) {
-			/**
-			 * 简单检测播放源的合法性,不合法不播放
-			 */
 			Toast.makeText(this, "please input your video source",
 					Toast.LENGTH_SHORT).show();
 			source = "http://devimages.apple.com/iphone/samples/bipbop/gear4/prog_index.m3u8";
-			
+
 			Intent intent = new Intent(this, VideoActivity.class);
 			intent.setData(Uri.parse(source));
 			startActivity(intent);
@@ -204,8 +155,8 @@ public class MainActivity extends Activity {
 			startActivity(intent);
 		}
 	}
-	
-	private void playPicture(){
+
+	private void playPicture() {
 		Intent intent = new Intent(this, StandardVideoActivity.class);
 		startActivity(intent);
 	}
